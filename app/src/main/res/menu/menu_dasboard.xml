@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/dashboard_item"
-        android:title="@string/dashboard" />
-    <item
-        android:id="@+id/add_stock"
-        android:title="New Stock" />
-    <item
-        android:id="@+id/list_barang"
-        android:title="List Barang" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashboard_item"
+            android:icon="@drawable/ic_dashboard"
+            android:title="@string/dashboard" />
+        <item
+            android:id="@+id/inventory_item"
+            android:icon="@drawable/ic_store"
+            android:title="@string/inventory" />
+    </group>
 </menu>

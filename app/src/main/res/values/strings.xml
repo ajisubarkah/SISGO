@@ -4,4 +4,6 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="dashboard">Dashboard</string>
+    <string name="inventory">Inventory</string>
+    <string name="scanner_error">Error</string>
 </resources>
