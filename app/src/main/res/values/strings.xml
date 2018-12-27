@@ -6,4 +6,5 @@
     <string name="dashboard">Dashboard</string>
     <string name="inventory">Inventory</string>
     <string name="scanner_error">Error</string>
+    <string name="logout">Logout</string>
 </resources>

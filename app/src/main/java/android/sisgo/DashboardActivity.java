@@ -1,6 +1,7 @@
 package android.sisgo;
 
-import android.app.FragmentTransaction;p
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.sisgo.fragment.DashboardFragment;
 import android.sisgo.fragment.InventoryFragment;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -54,6 +56,11 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        doExit();
+    }
+
     public void setNavigationItemSelected(int menu) {
         switch (menu) {
             case R.id.dashboard_item:
@@ -61,6 +68,9 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
             case R.id.inventory_item:
                 setFragment(new InventoryFragment());
+                break;
+            case R.id.logout:
+                doExit();
                 break;
         }
 
@@ -72,5 +82,23 @@ public class DashboardActivity extends AppCompatActivity {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame, fragment);
         transaction.commit();
+    }
+
+    void doExit() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        DashboardActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
