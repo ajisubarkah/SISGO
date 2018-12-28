@@ -1,4 +1,4 @@
-package android.sisgo.presenter;
+package android.sisgo.view;
 
 public interface DashboardView {
     void showLoading();

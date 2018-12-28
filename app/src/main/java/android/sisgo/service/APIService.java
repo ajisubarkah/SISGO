@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIService {
     private static Retrofit retrofit = null;
-    private static String URL = "http://192.168.4.5/laraati/public/api/v1/";
+    private static String URL = "http://subarkah.kuy.web.id/api/v1/";
 
     public static Retrofit getClient() {
 
