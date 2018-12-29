@@ -1,6 +1,5 @@
 package android.sisgo.adapter;
 
-import android.content.Context;
 import android.sisgo.R;
 import android.sisgo.model.RestockItem;
 import android.support.annotation.NonNull;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyViewHolder> {
 
-    private Context context;
     private ArrayList<RestockItem> listRestock;
 
     public DashboardAdapter(ArrayList<RestockItem> myDataset) {
@@ -42,7 +40,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         myViewHolder.tvDate.setText(getListRestock().get(i).getUpdatedAt());
         myViewHolder.tvUsername.setText(getListRestock().get(i).getUsername());
-        myViewHolder.tvId.setText(getListRestock().get(i).getId());
+        myViewHolder.tvId.setText(String.valueOf(getListRestock().get(i).getId()));
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

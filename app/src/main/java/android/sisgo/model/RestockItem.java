@@ -47,14 +47,4 @@ public class RestockItem {
     public String getUpdatedAt() {
         return updatedAt;
     }
-
-    @Override
-    public String toString() {
-        return "RestockItem{" +
-                "createdAt = '" + createdAt + '\'' +
-                ",id = '" + id + '\'' +
-                ",username = '" + username + '\'' +
-                ",updatedAt = '" + updatedAt + '\'' +
-                "}";
-    }
 }

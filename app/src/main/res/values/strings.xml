@@ -7,4 +7,12 @@
     <string name="inventory">Inventory</string>
     <string name="scanner_error">Error</string>
     <string name="logout">Logout</string>
+    <string name="no_data">No Data Record!</string>
+    <string name="example_date">01 Jan 2019 00:00</string>
+    <string name="example_user">subarkah</string>
+    <string name="example_id">001</string>
+    <string name="stock">Stock : </string>
+    <string name="example_price">Rp. 1.000.000,00</string>
+    <string name="example_name">Nama Barang</string>
+    <string name="example_barcode">999999999999</string>
 </resources>

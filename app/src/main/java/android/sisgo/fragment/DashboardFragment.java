@@ -10,6 +10,7 @@ import android.sisgo.adapter.DashboardAdapter;
 import android.sisgo.model.RestockItem;
 import android.sisgo.model.RestockResponse;
 import android.sisgo.model.UserResponse;
+import android.sisgo.presenter.DashboardPresenter;
 import android.sisgo.service.APIInterface;
 import android.sisgo.service.APIService;
 import android.sisgo.view.DashboardView;
@@ -22,9 +23,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,10 +36,13 @@ import retrofit2.Response;
 
 public class DashboardFragment extends Fragment implements DashboardView {
 
-    private Button button;
-    private APIInterface apiInterface;
+    protected Button button;
+    protected APIInterface apiInterface;
+    protected DashboardAdapter adapter;
     private ArrayList<RestockItem> listItems = new ArrayList<>();
-    private RecyclerView rcView;
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private TextView tvEmpty;
 
     @Nullable
     @Override
@@ -47,7 +54,7 @@ public class DashboardFragment extends Fragment implements DashboardView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        button = getView().findViewById(R.id.button_add);
+        button = Objects.requireNonNull(getView()).findViewById(R.id.button_add);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,48 +63,44 @@ public class DashboardFragment extends Fragment implements DashboardView {
                 startActivity(intent);
             }
         });
-        rcView = getView().findViewById(R.id.recycler_view);
+
+        recyclerView = getView().findViewById(R.id.recycler_view);
+        progressBar = getView().findViewById(R.id.progress_bar);
+        tvEmpty = getView().findViewById(R.id.no_data);
+
         apiInterface = APIService.getClient().create(APIInterface.class);
-        doLoad();
+
+        DashboardPresenter presenter = new DashboardPresenter(this, apiInterface);
+        presenter.getLoad();
     }
 
-    void doLoad(){
-        Call<RestockResponse> call = apiInterface.getRestock();
-        call.enqueue(new Callback<RestockResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<RestockResponse> call, @NonNull Response<RestockResponse> response) {
-                RestockResponse res = response.body();
-                assert response.body() != null;
-                listItems.addAll(res.getData());
-                Toast.makeText(getActivity(), response.body().toString(), Toast.LENGTH_LONG).show();
-                rcView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                DashboardAdapter adapter = new DashboardAdapter(listItems);
-                rcView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<RestockResponse> call, @NonNull Throwable t) {
-
-            }
-        });
-    }
     @Override
     public void showLoading() {
-
+        recyclerView.setVisibility(View.INVISIBLE);
+        tvEmpty.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        recyclerView.setVisibility(View.VISIBLE);
+        tvEmpty.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void showEmpty() {
-
+        recyclerView.setVisibility(View.INVISIBLE);
+        tvEmpty.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
-    public void showEvent() {
-
+    public void showEvent(ArrayList<RestockItem> data) {
+        listItems.clear();
+        listItems.addAll(data);
+        adapter = new DashboardAdapter(listItems);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
     }
 }

@@ -4,17 +4,16 @@ import java.util.ArrayList;
 
 import com.google.gson.annotations.SerializedName;
 
-public class RestockResponse {
+public class GoodsResponse {
 
     @SerializedName("data")
-    private ArrayList<RestockItem> data;
+    private ArrayList<GoodItem> data;
 
-    public void setData(ArrayList<RestockItem> data) {
+    public void setData(ArrayList<GoodItem> data) {
         this.data = data;
     }
 
-    public ArrayList<RestockItem> getData() {
+    public ArrayList<GoodItem> getData() {
         return data;
     }
-
 }

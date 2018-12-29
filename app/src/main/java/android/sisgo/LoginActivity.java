@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
-
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

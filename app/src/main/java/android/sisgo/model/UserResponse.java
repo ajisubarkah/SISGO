@@ -37,12 +37,4 @@ public class UserResponse {
         return token;
     }
 
-    @Override
-    public String toString() {
-        return "UserResponse{" +
-                "message = '" + message + '\'' +
-                ",status = '" + status + '\'' +
-                ",token = '" + token + '\'' +
-                "}";
-    }
 }
