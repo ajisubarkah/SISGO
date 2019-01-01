@@ -4,91 +4,102 @@ import com.google.gson.annotations.SerializedName;
 
 public class GoodItem {
 
-	@SerializedName("createdAt")
-	private String createdAt;
+	@SerializedName("intId")
+	private int intId;
 
-	@SerializedName("priceSelling")
-	private String priceSelling;
+	@SerializedName("intPurchase")
+	private int intPurchase;
 
-	@SerializedName("name")
-	private String name;
+	@SerializedName("strBarcode")
+	private String strBarcode;
 
-	@SerializedName("id")
-	private int id;
+	@SerializedName("intSelling")
+	private int intSelling;
 
-	@SerializedName("stock")
-	private String stock;
+	@SerializedName("intStock")
+	private int intStock;
 
-	@SerializedName("barcode")
-	private String barcode;
+	@SerializedName("strCreatedAt")
+	private String strCreatedAt;
 
-	@SerializedName("pricePurchase")
-	private String pricePurchase;
+	@SerializedName("strName")
+	private String strName;
 
-	@SerializedName("updatedAt")
-	private String updatedAt;
+	@SerializedName("strImg")
+	private String strImg;
 
-	public void setCreatedAt(String createdAt){
-		this.createdAt = createdAt;
+	@SerializedName("strCpdatedAt")
+	private String strCpdatedAt;
+
+	public void setIntId(int intId){
+		this.intId = intId;
 	}
 
-	public String getCreatedAt(){
-		return createdAt;
+	public int getIntId(){
+		return intId;
 	}
 
-	public void setPriceSelling(String priceSelling){
-		this.priceSelling = priceSelling;
+	public void setIntPurchase(int intPurchase){
+		this.intPurchase = intPurchase;
 	}
 
-	public String getPriceSelling(){
-		return priceSelling;
+	public int getIntPurchase(){
+		return intPurchase;
 	}
 
-	public void setName(String name){
-		this.name = name;
+	public void setStrBarcode(String strBarcode){
+		this.strBarcode = strBarcode;
 	}
 
-	public String getName(){
-		return name;
+	public String getStrBarcode(){
+		return strBarcode;
 	}
 
-	public void setId(int id){
-		this.id = id;
+	public void setIntSelling(int intSelling){
+		this.intSelling = intSelling;
 	}
 
-	public int getId(){
-		return id;
+	public int getIntSelling(){
+		return intSelling;
 	}
 
-	public void setStock(String stock){
-		this.stock = stock;
+	public void setIntStock(int intStock){
+		this.intStock = intStock;
 	}
 
-	public String getStock(){
-		return stock;
+	public int getIntStock(){
+		return intStock;
 	}
 
-	public void setBarcode(String barcode){
-		this.barcode = barcode;
+	public void setStrCreatedAt(String strCreatedAt){
+		this.strCreatedAt = strCreatedAt;
 	}
 
-	public String getBarcode(){
-		return barcode;
+	public String getStrCreatedAt(){
+		return strCreatedAt;
 	}
 
-	public void setPricePurchase(String pricePurchase){
-		this.pricePurchase = pricePurchase;
+	public void setStrName(String strName){
+		this.strName = strName;
 	}
 
-	public String getPricePurchase(){
-		return pricePurchase;
+	public String getStrName(){
+		return strName;
 	}
 
-	public void setUpdatedAt(String updatedAt){
-		this.updatedAt = updatedAt;
+	public void setStrImg(String strImg){
+		this.strImg = strImg;
 	}
 
-	public String getUpdatedAt(){
-		return updatedAt;
+	public String getStrImg(){
+		return strImg;
+	}
+
+	public void setStrCpdatedAt(String strCpdatedAt){
+		this.strCpdatedAt = strCpdatedAt;
+	}
+
+	public String getStrCpdatedAt(){
+		return strCpdatedAt;
 	}
 }

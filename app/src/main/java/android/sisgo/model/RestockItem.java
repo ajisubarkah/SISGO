@@ -4,47 +4,48 @@ import com.google.gson.annotations.SerializedName;
 
 public class RestockItem {
 
-    @SerializedName("createdAt")
-    private String createdAt;
+	@SerializedName("intId")
+	private int intId;
 
-    @SerializedName("id")
-    private int id;
+	@SerializedName("strCreatedAt")
+	private String strCreatedAt;
 
-    @SerializedName("username")
-    private String username;
+	@SerializedName("strUsername")
+	private String strUsername;
 
-    @SerializedName("updatedAt")
-    private String updatedAt;
+	@SerializedName("strUpdatedAt")
+	private String strUpdatedAt;
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setIntId(int intId){
+		this.intId = intId;
+	}
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
+	public int getIntId(){
+		return intId;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setStrCreatedAt(String strCreatedAt){
+		this.strCreatedAt = strCreatedAt;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public String getStrCreatedAt(){
+		return strCreatedAt;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setStrUsername(String strUsername){
+		this.strUsername = strUsername;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getStrUsername(){
+		return strUsername;
+	}
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public void setStrUpdatedAt(String strUpdatedAt){
+		this.strUpdatedAt = strUpdatedAt;
+	}
 
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
+	public String getStrUpdatedAt(){
+		return strUpdatedAt;
+	}
+
 }

@@ -1,5 +1,6 @@
 package android.sisgo.adapter;
 
+import android.content.Context;
 import android.sisgo.R;
 import android.sisgo.model.GoodItem;
 import android.support.annotation.NonNull;
@@ -9,14 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyViewHolder> {
     private ArrayList<GoodItem> listGoods;
-
-    public InventoryAdapter(ArrayList<GoodItem> myDataset) {
+    private Context context;
+    public InventoryAdapter(ArrayList<GoodItem> myDataset, Context context) {
         this.listGoods = myDataset;
+        this.context = context;
     }
 
     private ArrayList<GoodItem> getListGoods() {
@@ -38,10 +43,14 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        myViewHolder.barcode.setText(getListGoods().get(i).getBarcode());
-        myViewHolder.nameGoods.setText(getListGoods().get(i).getName());
-        myViewHolder.priceList.setText(getListGoods().get(i).getPriceSelling());
-        myViewHolder.stock.setText(getListGoods().get(i).getStock());
+        myViewHolder.barcode.setText(getListGoods().get(i).getStrBarcode());
+        myViewHolder.nameGoods.setText(getListGoods().get(i).getStrName());
+        myViewHolder.priceList.setText(String.valueOf(getListGoods().get(i).getIntPurchase()));
+        myViewHolder.stock.setText(String.valueOf(getListGoods().get(i).getIntStock()));
+        Glide.with(context)
+                .load(getListGoods().get(i).getStrImg())
+                .into(myViewHolder.tvImage);
+        Toast.makeText(context, getListGoods().get(i).getStrImg(), Toast.LENGTH_LONG).show();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

@@ -1,6 +1,6 @@
 package android.sisgo.presenter;
 
-import android.sisgo.model.GoodsResponse;
+import android.sisgo.model.GoodResponse;
 import android.sisgo.service.APIInterface;
 import android.sisgo.view.InventoryView;
 import android.support.annotation.NonNull;
@@ -21,11 +21,11 @@ public class InventoryPresenter {
 
     public void getLoad() {
         view.showLoading();
-        Call<GoodsResponse> call = apiInterface.getGoods();
-        call.enqueue(new Callback<GoodsResponse>() {
+        Call<GoodResponse> call = apiInterface.getGoods();
+        call.enqueue(new Callback<GoodResponse>() {
             @Override
-            public void onResponse(@NonNull Call<GoodsResponse> call, @NonNull Response<GoodsResponse> response) {
-                GoodsResponse res = response.body();
+            public void onResponse(@NonNull Call<GoodResponse> call, @NonNull Response<GoodResponse> response) {
+                GoodResponse res = response.body();
                 view.hideLoading();
                 if(!response.body().getData().isEmpty())
                     view.showEvent(res.getData());
@@ -34,7 +34,7 @@ public class InventoryPresenter {
             }
 
             @Override
-            public void onFailure(@NonNull Call<GoodsResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<GoodResponse> call, @NonNull Throwable t) {
                 view.hideLoading();
                 view.showEmpty();
             }

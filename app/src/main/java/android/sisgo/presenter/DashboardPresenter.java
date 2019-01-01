@@ -1,19 +1,9 @@
 package android.sisgo.presenter;
 
-import android.sisgo.adapter.DashboardAdapter;
-import android.sisgo.fragment.DashboardFragment;
-import android.sisgo.model.RestockItem;
 import android.sisgo.model.RestockResponse;
 import android.sisgo.service.APIInterface;
-import android.sisgo.service.APIService;
 import android.sisgo.view.DashboardView;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;

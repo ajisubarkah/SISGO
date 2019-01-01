@@ -1,6 +1,7 @@
 package android.sisgo.view;
 
 import android.sisgo.model.GoodItem;
+
 import java.util.ArrayList;
 
 public interface InventoryView {

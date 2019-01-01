@@ -2,14 +2,10 @@ package android.sisgo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.sisgo.DashboardActivity;
-import android.sisgo.LoginActivity;
 import android.sisgo.R;
 import android.sisgo.ScanActivity;
 import android.sisgo.adapter.DashboardAdapter;
 import android.sisgo.model.RestockItem;
-import android.sisgo.model.RestockResponse;
-import android.sisgo.model.UserResponse;
 import android.sisgo.presenter.DashboardPresenter;
 import android.sisgo.service.APIInterface;
 import android.sisgo.service.APIService;
@@ -25,14 +21,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DashboardFragment extends Fragment implements DashboardView {
 

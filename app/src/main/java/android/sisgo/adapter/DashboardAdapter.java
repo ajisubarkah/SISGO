@@ -38,9 +38,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        myViewHolder.tvDate.setText(getListRestock().get(i).getUpdatedAt());
-        myViewHolder.tvUsername.setText(getListRestock().get(i).getUsername());
-        myViewHolder.tvId.setText(String.valueOf(getListRestock().get(i).getId()));
+        myViewHolder.tvDate.setText(getListRestock().get(i).getStrUpdatedAt());
+        myViewHolder.tvUsername.setText(getListRestock().get(i).getStrUsername());
+        myViewHolder.tvId.setText(String.valueOf(getListRestock().get(i).getIntId()));
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

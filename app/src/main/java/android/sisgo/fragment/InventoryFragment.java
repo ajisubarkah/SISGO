@@ -1,13 +1,11 @@
 package android.sisgo.fragment;
 
 import android.app.Fragment;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.sisgo.R;
-import android.sisgo.ScanActivity;
 import android.sisgo.adapter.InventoryAdapter;
 import android.sisgo.model.GoodItem;
-import android.sisgo.presenter.DashboardPresenter;
 import android.sisgo.presenter.InventoryPresenter;
 import android.sisgo.service.APIInterface;
 import android.sisgo.service.APIService;
@@ -17,7 +15,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -74,7 +71,7 @@ public class InventoryFragment extends Fragment implements InventoryView {
     public void showEvent(ArrayList<GoodItem> data) {
         listGoods.clear();
         listGoods.addAll(data);
-        adapter = new InventoryAdapter(listGoods);
+        adapter = new InventoryAdapter(listGoods, getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
     }

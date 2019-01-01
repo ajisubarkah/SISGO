@@ -1,6 +1,6 @@
 package android.sisgo.service;
 
-import android.sisgo.model.GoodsResponse;
+import android.sisgo.model.GoodResponse;
 import android.sisgo.model.RestockResponse;
 import android.sisgo.model.UserResponse;
 
@@ -20,5 +20,5 @@ public interface APIInterface {
     Call<RestockResponse> getRestock();
 
     @GET("good/listgoods")
-    Call<GoodsResponse> getGoods();
+    Call<GoodResponse> getGoods();
 }
