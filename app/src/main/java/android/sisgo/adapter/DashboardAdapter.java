@@ -54,6 +54,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
             tvDate = itemView.findViewById(R.id.date_restock);
             tvUsername = itemView.findViewById(R.id.username);
             tvId = itemView.findViewById(R.id.restock_id);
+            
         }
     }
 }
