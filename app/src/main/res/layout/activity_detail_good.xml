@@ -1,9 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailGoodActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/tv_image"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_margin="8dp"
+        android:background="#000"
+        android:contentDescription="@string/image" />
+
+    <TextView
+        android:id="@+id/barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_goods"
+        android:layout_centerHorizontal="true"
+        android:text="@string/example_barcode"
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/name_goods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_image"
+        android:layout_centerHorizontal="true"
+        android:text="@string/example_name"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:id="@+id/lines"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/barcode"
+        android:layout_margin="8dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lines"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/stock" />
+
+            <TextView
+                android:id="@+id/stock"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/example_id"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/stock" />
+
+            <TextView
+                android:id="@+id/sell"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/example_id"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
