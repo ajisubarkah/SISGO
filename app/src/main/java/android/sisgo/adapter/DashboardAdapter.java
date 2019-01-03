@@ -28,10 +28,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
     @Override
     public int getItemCount() {
         return listRestock.size();
-    }
 
-    public OnItemClick getItemClick() {
-        return itemClick;
     }
 
     public void setItemClick(OnItemClick itemClick) {

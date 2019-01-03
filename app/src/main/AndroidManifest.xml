@@ -27,7 +27,9 @@
             android:name=".ScanActivity"
             android:theme="@style/NoActionBar" />
         <activity android:name=".DetailRestockActivity" />
-        <activity android:name=".DetailGoodActivity"></activity>
+        <activity
+            android:name=".DetailGoodActivity"
+            android:theme="@style/NoActionBar"/>
     </application>
 
 </manifest>

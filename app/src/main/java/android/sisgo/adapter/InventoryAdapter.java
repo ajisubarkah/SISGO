@@ -3,6 +3,7 @@ package android.sisgo.adapter;
 import android.content.Context;
 import android.sisgo.R;
 import android.sisgo.model.GoodItem;
+import android.sisgo.utils.OnItemClick;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,8 +18,10 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyViewHolder> {
+
     private ArrayList<GoodItem> listGoods;
     private Context context;
+    private OnItemClick itemClick;
     public InventoryAdapter(ArrayList<GoodItem> myDataset, Context context) {
         this.listGoods = myDataset;
         this.context = context;
@@ -31,6 +34,10 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
     @Override
     public int getItemCount() {
         return listGoods.size();
+    }
+
+    public void setItemClick(OnItemClick itemClick) {
+        this.itemClick = itemClick;
     }
 
     @NonNull
@@ -50,10 +57,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
         Glide.with(context)
                 .load(getListGoods().get(i).getStrImg())
                 .into(myViewHolder.tvImage);
-        Toast.makeText(context, getListGoods().get(i).getStrImg(), Toast.LENGTH_LONG).show();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView tvImage;
         TextView barcode;
         TextView nameGoods;
@@ -62,11 +68,20 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
 
         MyViewHolder(View view) {
             super(view);
+            view.setClickable(true);
+            view.setOnClickListener(this);
             tvImage = itemView.findViewById(R.id.tv_image);
             barcode = itemView.findViewById(R.id.barcode);
             nameGoods = itemView.findViewById(R.id.name_goods);
             priceList = itemView.findViewById(R.id.price_list);
             stock = itemView.findViewById(R.id.stock);
+        }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onClick(View v) {
+            if(itemClick != null)
+                itemClick.onItemClicked(getPosition());
         }
     }
 }

@@ -1,9 +1,14 @@
 package android.sisgo.presenter;
 
+import android.sisgo.model.GoodItem;
 import android.sisgo.model.GoodResponse;
 import android.sisgo.service.APIInterface;
 import android.sisgo.view.InventoryView;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,4 +45,6 @@ public class InventoryPresenter {
             }
         });
     }
+
+
 }

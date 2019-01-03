@@ -1,5 +1,7 @@
 package android.sisgo.service;
 
+import android.sisgo.model.GoodDetailResponse;
+import android.sisgo.model.GoodItem;
 import android.sisgo.model.GoodResponse;
 import android.sisgo.model.RestockResponse;
 import android.sisgo.model.UserResponse;
@@ -21,4 +23,8 @@ public interface APIInterface {
 
     @GET("good/listgoods")
     Call<GoodResponse> getGoods();
+
+    @FormUrlEncoded
+    @POST("good/detailgood")
+    Call<GoodDetailResponse> getDetailGood(@Field("id") String id);
 }
