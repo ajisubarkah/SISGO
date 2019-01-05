@@ -3,12 +3,20 @@ package android.sisgo;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
@@ -22,9 +30,16 @@ import androidx.annotation.NonNull;
 
 public class ScanActivity extends AppCompatActivity {
 
-    private static final int RC_PERMISSION = 10;
+    public static final int RC_PERMISSION = 10;
     private CodeScanner codeScanner;
-    private boolean mPermissionGranted;
+    private CodeScannerView scannerView;
+    private LinearLayout contentManual;
+    private Menu menu;
+    private boolean statusBarcode = true;
+    protected EditText barcodeText;
+    protected Button barcodeButton;
+    protected TableLayout tableLayout;
+    protected boolean mPermissionGranted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +48,26 @@ public class ScanActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+
         final Activity activity = this;
-        CodeScannerView scannerView = findViewById(R.id.scanner_view);
+
+        scannerView = findViewById(R.id.scanner_view);
+        contentManual = findViewById(R.id.content_manual);
+        barcodeText = findViewById(R.id.barcode_text);
+        tableLayout = findViewById(R.id.table_layout);
+
+        barcodeButton = findViewById(R.id.button_barcode);
+        barcodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         codeScanner = new CodeScanner(this, scannerView);
         codeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
@@ -51,6 +80,7 @@ public class ScanActivity extends AppCompatActivity {
                 });
             }
         });
+
         codeScanner.setErrorCallback(new ErrorCallback() {
             @Override
             public void onError(@NonNull final Exception error) {
@@ -75,11 +105,36 @@ public class ScanActivity extends AppCompatActivity {
         }
     }
 
+    private void setAddedBarcode(boolean statusBarcode) {
+        if (statusBarcode) {
+            scannerView.setVisibility(View.INVISIBLE);
+            contentManual.setVisibility(View.VISIBLE);
+            menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.barcode));
+        } else {
+            scannerView.setVisibility(View.VISIBLE);
+            contentManual.setVisibility(View.INVISIBLE);
+            menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_keyboard));
+        }
+        this.statusBarcode = !statusBarcode;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_scan, menu);
+        this.menu = menu;
+        setAddedBarcode(statusBarcode);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                break;
+            case R.id.barcode_menu:
+                setAddedBarcode(statusBarcode);
                 break;
         }
         return true;

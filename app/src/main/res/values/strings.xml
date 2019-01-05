@@ -16,4 +16,6 @@
     <string name="example_name">Nama Barang</string>
     <string name="example_barcode">999999999999</string>
     <string name="image">image</string>
+    <string name="add">add</string>
+    <string name="barcode">Barcode</string>
 </resources>

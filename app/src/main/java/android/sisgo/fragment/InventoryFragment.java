@@ -83,7 +83,6 @@ public class InventoryFragment extends Fragment implements InventoryView, OnItem
 
     @Override
     public void onItemClicked(int position) {
-        Toast.makeText(getActivity(), String.valueOf(listGoods.get(position).getIntId()), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(getActivity(), DetailGoodActivity.class);
         intent.putExtra("id", String.valueOf(listGoods.get(position).getIntId()));
         startActivity(intent);

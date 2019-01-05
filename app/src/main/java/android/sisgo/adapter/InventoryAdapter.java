@@ -3,6 +3,7 @@ package android.sisgo.adapter;
 import android.content.Context;
 import android.sisgo.R;
 import android.sisgo.model.GoodItem;
+import android.sisgo.utils.Konversi;
 import android.sisgo.utils.OnItemClick;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         myViewHolder.barcode.setText(getListGoods().get(i).getStrBarcode());
         myViewHolder.nameGoods.setText(getListGoods().get(i).getStrName());
-        myViewHolder.priceList.setText(String.valueOf(getListGoods().get(i).getIntPurchase()));
+        myViewHolder.priceList.setText(Konversi.convert(String.valueOf(getListGoods().get(i).getIntPurchase())));
         myViewHolder.stock.setText(String.valueOf(getListGoods().get(i).getIntStock()));
         Glide.with(context)
                 .load(getListGoods().get(i).getStrImg())
