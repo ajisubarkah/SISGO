@@ -18,4 +18,5 @@
     <string name="image">image</string>
     <string name="add">add</string>
     <string name="barcode">Barcode</string>
+    <string name="values_zero">0</string>
 </resources>

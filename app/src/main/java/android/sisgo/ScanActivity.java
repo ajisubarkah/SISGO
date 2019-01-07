@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,7 +17,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
@@ -64,7 +68,7 @@ public class ScanActivity extends AppCompatActivity {
         barcodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                addTableRow(barcodeText.getText().toString());
             }
         });
 
@@ -116,6 +120,44 @@ public class ScanActivity extends AppCompatActivity {
             menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_keyboard));
         }
         this.statusBarcode = !statusBarcode;
+    }
+
+    private void addTableRow(String barcode) {
+        RelativeLayout row = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.scan_row, null);
+        TextView barcodeView = row.findViewById(R.id.barcode);
+        final TextView values = row.findViewById(R.id.values_pick);
+
+        barcodeView.setText(barcode);
+        values.setText("1");
+
+        row.findViewById(R.id.number_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonPickerListener(values, true);
+            }
+        });
+
+        row.findViewById(R.id.number_min).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonPickerListener(values, false);
+            }
+        });
+        tableLayout.addView(row);
+    }
+
+    private void buttonPickerListener(TextView values, boolean statusAdd) {
+        int val = Integer.parseInt(values.getText().toString());
+        if (statusAdd) {
+            val++;
+            values.setText(val + "");
+        } else {
+            if (val == 0)
+                values.setText(val + "");
+            else
+                val--;
+                values.setText(val + "");
+        }
     }
 
     @Override

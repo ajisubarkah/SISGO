@@ -42,6 +42,7 @@
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/barcode"
+                    android:inputType="number"
                     android:textAlignment="center" />
 
                 <Button
@@ -53,16 +54,16 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <TableLayout
-            android:id="@+id/table_layout"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
+            android:layout_height="match_parent">
 
-            <TableRow>
-
-                <TextView android:text="@string/app_name" />
-            </TableRow>
-        </TableLayout>
+            <TableLayout
+                android:id="@+id/table_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:isScrollContainer="true"
+                android:padding="16dp" />
+        </ScrollView>
     </LinearLayout>
 </LinearLayout>
