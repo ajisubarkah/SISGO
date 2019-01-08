@@ -29,7 +29,8 @@
         <activity android:name=".DetailRestockActivity" />
         <activity
             android:name=".DetailGoodActivity"
-            android:theme="@style/NoActionBar"/>
+            android:theme="@style/NoActionBar" />
+        <activity android:name=".HistoryActivity"></activity>
     </application>
 
 </manifest>

@@ -2,11 +2,13 @@ package android.sisgo;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +21,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
@@ -80,6 +81,8 @@ public class ScanActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(activity, result.getText(), Toast.LENGTH_SHORT).show();
+                        addTableRow(result.getText());
+                        onResume();
                     }
                 });
             }
@@ -123,41 +126,58 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void addTableRow(String barcode) {
-        RelativeLayout row = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.scan_row, null);
-        TextView barcodeView = row.findViewById(R.id.barcode);
-        final TextView values = row.findViewById(R.id.values_pick);
+        if(checkDuplicateBarcode(barcode)) {
+            RelativeLayout row = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.scan_row, null);
+            TextView barcodeView = row.findViewById(R.id.barcode);
+            final TextView values = row.findViewById(R.id.values_pick);
 
-        barcodeView.setText(barcode);
-        values.setText("1");
+            barcodeView.setText(barcode);
+            values.setText("1");
 
-        row.findViewById(R.id.number_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonPickerListener(values, true);
-            }
-        });
+            row.findViewById(R.id.number_add).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    buttonPickerListener(values, true);
+                }
+            });
 
-        row.findViewById(R.id.number_min).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonPickerListener(values, false);
-            }
-        });
-        tableLayout.addView(row);
+            row.findViewById(R.id.number_min).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    buttonPickerListener(values, false);
+                }
+            });
+            tableLayout.addView(row);
+        }
     }
 
     private void buttonPickerListener(TextView values, boolean statusAdd) {
         int val = Integer.parseInt(values.getText().toString());
         if (statusAdd) {
             val++;
-            values.setText(val + "");
+            values.setText(String.valueOf(val));
         } else {
             if (val == 0)
-                values.setText(val + "");
+                values.setText(String.valueOf(val));
             else
                 val--;
-                values.setText(val + "");
+            values.setText(String.valueOf(val));
         }
+    }
+
+    private boolean checkDuplicateBarcode(String barcode){
+        for(int i = 0, j = tableLayout.getChildCount(); i < j; i++) {
+            View view = tableLayout.getChildAt(i);
+            if(view instanceof RelativeLayout) {
+                TextView barcodeView = view.findViewById(R.id.barcode);
+                if(barcodeView.getText().toString().equals(barcode)) {
+                    TextView values = view.findViewById(R.id.values_pick);
+                    buttonPickerListener(values, true);
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -205,5 +225,24 @@ public class ScanActivity extends AppCompatActivity {
                 mPermissionGranted = false;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to cancel?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        ScanActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
