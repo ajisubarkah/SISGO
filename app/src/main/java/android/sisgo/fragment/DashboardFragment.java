@@ -2,6 +2,7 @@ package android.sisgo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.sisgo.HistoryActivity;
 import android.sisgo.R;
 import android.sisgo.ScanActivity;
 import android.sisgo.adapter.DashboardAdapter;
@@ -101,6 +102,8 @@ public class DashboardFragment extends Fragment implements DashboardView, OnItem
     @Override
     public void onItemClicked(int position) {
         Toast.makeText(getActivity(), listItems.get(position).getStrUsername(), Toast.LENGTH_LONG).show();
-        
+        Intent intent = new Intent(getActivity(), HistoryActivity.class);
+        intent.putExtra("idRestock", String.valueOf(listItems.get(position).getIntId()));
+        startActivity(intent);
     }
 }

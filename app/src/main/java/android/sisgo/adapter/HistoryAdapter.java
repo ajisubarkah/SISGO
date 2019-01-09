@@ -2,7 +2,6 @@ package android.sisgo.adapter;
 
 import android.sisgo.R;
 import android.sisgo.model.HistoryItem;
-import android.sisgo.utils.OnItemClick;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder> {
 
     private ArrayList<HistoryItem> listHistory;
-    private OnItemClick itemClick;
 
     public HistoryAdapter(ArrayList<HistoryItem> myDataset) {
         this.listHistory = myDataset;
@@ -31,15 +29,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
     }
 
-    public void setItemClick(OnItemClick itemClick) {
-        this.itemClick = itemClick;
-    }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemRow = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_restock, parent, false);
+                .inflate(R.layout.recycler_history, parent, false);
         return new MyViewHolder(itemRow);
     }
 
@@ -50,7 +44,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         myViewHolder.tvStock.setText(getlistHistory().get(i).getIntAddStok());
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvBarcode;
         TextView tvName;
@@ -58,18 +52,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
         MyViewHolder(View view) {
             super(view);
-            view.setClickable(true);
-            view.setOnClickListener(this);
             tvBarcode = itemView.findViewById(R.id.barcode);
             tvName = itemView.findViewById(R.id.name_goods);
             tvStock = itemView.findViewById(R.id.stock);
         }
 
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onClick(View v) {
-            if(itemClick != null)
-                itemClick.onItemClicked(getPosition());
-        }
     }
 }

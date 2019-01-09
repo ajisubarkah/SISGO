@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.sisgo.model.UserResponse;
 import android.sisgo.service.APIInterface;
 import android.sisgo.service.APIService;
+import android.sisgo.utils.WhoIs;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -51,7 +52,8 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
                 if(res.getStatus() == 200){
                     Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                    intent.putExtra("TOKEN", res.getToken());
+                    WhoIs.setIdUser(res.getId());
+                    WhoIs.setTokenApi(res.getToken());
                     startActivity(intent);
                     finish();
                 }

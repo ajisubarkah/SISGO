@@ -26,7 +26,7 @@ public class InventoryPresenter {
 
     public void getLoad() {
         view.showLoading();
-        Call<GoodResponse> call = apiInterface.getGoods();
+        Call<GoodResponse> call = apiInterface.getAllGoods();
         call.enqueue(new Callback<GoodResponse>() {
             @Override
             public void onResponse(@NonNull Call<GoodResponse> call, @NonNull Response<GoodResponse> response) {

@@ -4,6 +4,7 @@ import android.sisgo.model.GoodDetailResponse;
 import android.sisgo.model.GoodItem;
 import android.sisgo.model.GoodResponse;
 import android.sisgo.model.HistoryResponse;
+import android.sisgo.model.InsertResponse;
 import android.sisgo.model.RestockResponse;
 import android.sisgo.model.UserResponse;
 
@@ -19,17 +20,27 @@ public interface APIInterface {
     @POST("login")
     Call<UserResponse> doLogin(@Field("username") String name, @Field("password") String password);
 
-    @GET("restock/listrestock")
-    Call<RestockResponse> getRestock();
-
     @GET("good/listgoods")
-    Call<GoodResponse> getGoods();
+    Call<GoodResponse> getAllGoods();
 
     @FormUrlEncoded
     @POST("good/detailgood")
     Call<GoodDetailResponse> getDetailGood(@Field("id") String id);
 
+    @GET("good/restock/listrestock")
+    Call<RestockResponse> getRestock();
+
     @FormUrlEncoded
-    @POST("good/listgoods")
+    @POST("good/restock/insertrestock")
+    Call<InsertResponse> setRestock(@Field("user_id") String id);
+
+    @FormUrlEncoded
+    @POST("good/stock/liststock")
     Call<HistoryResponse> getGoodsStockHistory(@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("good/stock/insertstock")
+    Call<InsertResponse> setGoodsStock(@Field("restock_id") String idRestock,
+                                        @Field("barcode") String barcode,
+                                        @Field("add_stock") String addStock);
 }

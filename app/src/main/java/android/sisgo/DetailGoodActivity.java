@@ -51,12 +51,16 @@ public class DetailGoodActivity extends AppCompatActivity implements DetailGoodV
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                onBackPressed();
                 break;
         }
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
     @Override
     public void showLoading() {
         frameContent.setVisibility(View.INVISIBLE);

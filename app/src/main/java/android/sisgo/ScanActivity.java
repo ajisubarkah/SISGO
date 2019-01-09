@@ -6,11 +6,18 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
+import android.sisgo.model.InsertResponse;
+import android.sisgo.model.InsertStockItem;
+import android.sisgo.presenter.ScannerPresenter;
+import android.sisgo.service.APIInterface;
+import android.sisgo.service.APIService;
+import android.sisgo.view.ScannerView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -31,9 +39,11 @@ import com.budiyev.android.codescanner.DecodeCallback;
 import com.budiyev.android.codescanner.ErrorCallback;
 import com.google.zxing.Result;
 
+import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 
-public class ScanActivity extends AppCompatActivity {
+public class ScanActivity extends AppCompatActivity implements ScannerView {
 
     public static final int RC_PERMISSION = 10;
     private CodeScanner codeScanner;
@@ -44,7 +54,15 @@ public class ScanActivity extends AppCompatActivity {
     protected EditText barcodeText;
     protected Button barcodeButton;
     protected TableLayout tableLayout;
+    private ProgressBar progressBar;
     protected boolean mPermissionGranted;
+    protected boolean saveStatus = false;
+    protected boolean insertRestock = false;
+    private ScannerPresenter presenter;
+    protected APIInterface apiInterface;
+    private String idRestock;
+    private ArrayList<InsertResponse> insertResponses = new ArrayList<>();
+    private ArrayList<InsertStockItem> insertStockItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +82,13 @@ public class ScanActivity extends AppCompatActivity {
         contentManual = findViewById(R.id.content_manual);
         barcodeText = findViewById(R.id.barcode_text);
         tableLayout = findViewById(R.id.table_layout);
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.GONE);
+
+        insertResponses.clear();
+
+        apiInterface = APIService.getClient().create(APIInterface.class);
+        presenter = new ScannerPresenter(this, apiInterface);
 
         barcodeButton = findViewById(R.id.button_barcode);
         barcodeButton.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +151,7 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void addTableRow(String barcode) {
-        if(checkDuplicateBarcode(barcode)) {
+        if (checkDuplicateBarcode(barcode)) {
             RelativeLayout row = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.scan_row, null);
             TextView barcodeView = row.findViewById(R.id.barcode);
             final TextView values = row.findViewById(R.id.values_pick);
@@ -147,6 +172,7 @@ public class ScanActivity extends AppCompatActivity {
                     buttonPickerListener(values, false);
                 }
             });
+            saveStatus = false;
             tableLayout.addView(row);
         }
     }
@@ -165,19 +191,40 @@ public class ScanActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkDuplicateBarcode(String barcode){
-        for(int i = 0, j = tableLayout.getChildCount(); i < j; i++) {
+    private boolean checkDuplicateBarcode(String barcode) {
+        for (int i = 0, j = tableLayout.getChildCount(); i < j; i++) {
             View view = tableLayout.getChildAt(i);
-            if(view instanceof RelativeLayout) {
+            if (view instanceof RelativeLayout) {
                 TextView barcodeView = view.findViewById(R.id.barcode);
-                if(barcodeView.getText().toString().equals(barcode)) {
+                if (barcodeView.getText().toString().equals(barcode)) {
                     TextView values = view.findViewById(R.id.values_pick);
                     buttonPickerListener(values, true);
+                    saveStatus = false;
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    private void setSaveGoodStock() {
+        if(!insertRestock) {
+            for (int i = 0, j = tableLayout.getChildCount(); i < j; i++) {
+                View view = tableLayout.getChildAt(i);
+                if (view instanceof RelativeLayout) {
+                    TextView barcodeView = view.findViewById(R.id.barcode);
+                    TextView intStock = view.findViewById(R.id.values_pick);
+                    insertStockItems.add(new InsertStockItem(barcodeView.getText().toString(), intStock.getText().toString()));
+                }
+            }
+            idRestock = presenter.insertRestock(insertStockItems);
+            insertRestock = true;
+        }
+        saveStatus = true;
+    }
+
+    private void refreshGoodsStock() {
+
     }
 
     @Override
@@ -197,6 +244,9 @@ public class ScanActivity extends AppCompatActivity {
                 break;
             case R.id.barcode_menu:
                 setAddedBarcode(statusBarcode);
+                break;
+            case R.id.save:
+                setSaveGoodStock();
                 break;
         }
         return true;
@@ -230,19 +280,57 @@ public class ScanActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to cancel?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        ScanActivity.this.finish();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+        if(saveStatus) {
+            builder.setMessage("Exit ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ScanActivity.this.finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+        } else {
+            builder.setMessage("Are you sure you want to exit without saving ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ScanActivity.this.finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+        }
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    public void showLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showEvent(ArrayList<InsertResponse> data) {
+        insertResponses.clear();
+        insertResponses.addAll(data);
+        for (int i = 0, j = tableLayout.getChildCount(); i < j; i++) {
+            View view = tableLayout.getChildAt(i);
+            if (view instanceof RelativeLayout) {
+                TextView name = view.findViewById(R.id.name_goods);
+                name.setText(insertResponses.get(i).getStrNameGoods());
+            }
+        }
     }
 }
