@@ -19,4 +19,8 @@
     <string name="add">add</string>
     <string name="barcode">Barcode</string>
     <string name="values_zero">0</string>
+
+    <string name="title_activity_start">StartActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

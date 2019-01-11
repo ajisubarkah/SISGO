@@ -35,9 +35,12 @@ public class ScannerPresenter {
             @Override
             public void onResponse(@NonNull Call<InsertResponse> call, @NonNull Response<InsertResponse> response) {
                 InsertResponse res = response.body();
+
                 id = res.getId();
                 list.clear();
                 insertStock(0);
+
+                view.hideLoading();
             }
 
             @Override
@@ -49,7 +52,7 @@ public class ScannerPresenter {
         return id;
     }
 
-    public void insertStock(int index) {
+    private void insertStock(int index) {
         final int newIndex = index;
         if (index < listStock.size()) {
             Call<InsertResponse> call = apiInterface.setGoodsStock(id, listStock.get(index).getBarcode(), listStock.get(index).getAddStock());
