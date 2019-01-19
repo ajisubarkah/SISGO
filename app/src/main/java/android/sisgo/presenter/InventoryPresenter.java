@@ -32,7 +32,7 @@ public class InventoryPresenter {
             public void onResponse(@NonNull Call<GoodResponse> call, @NonNull Response<GoodResponse> response) {
                 GoodResponse res = response.body();
                 view.hideLoading();
-                if(!response.body().getData().isEmpty())
+                if(!res.getData().isEmpty())
                     view.showEvent(res.getData());
                 else
                     view.showEmpty();

@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                     WhoIs.setIdUser(res.getId());
                     WhoIs.setTokenApi(res.getToken());
+                    intent.putExtra("fullname", res.getFullname());
                     startActivity(intent);
                     finish();
                 }

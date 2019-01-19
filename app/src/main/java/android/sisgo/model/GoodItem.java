@@ -1,5 +1,6 @@
 package android.sisgo.model;
 
+import java.util.ArrayList;
 import com.google.gson.annotations.SerializedName;
 
 public class GoodItem {
@@ -8,16 +9,16 @@ public class GoodItem {
 	private int intId;
 
 	@SerializedName("intPurchase")
-	private int intPurchase;
+	private String intPurchase;
 
 	@SerializedName("strBarcode")
 	private String strBarcode;
 
 	@SerializedName("intSelling")
-	private int intSelling;
+	private String intSelling;
 
 	@SerializedName("intStock")
-	private int intStock;
+	private String intStock;
 
 	@SerializedName("strCreatedAt")
 	private String strCreatedAt;
@@ -26,7 +27,7 @@ public class GoodItem {
 	private String strName;
 
 	@SerializedName("strImg")
-	private String strImg;
+	private ArrayList<StrImgItem> strImg;
 
 	@SerializedName("strCpdatedAt")
 	private String strCpdatedAt;
@@ -39,11 +40,11 @@ public class GoodItem {
 		return intId;
 	}
 
-	public void setIntPurchase(int intPurchase){
+	public void setIntPurchase(String intPurchase){
 		this.intPurchase = intPurchase;
 	}
 
-	public int getIntPurchase(){
+	public String getIntPurchase(){
 		return intPurchase;
 	}
 
@@ -55,19 +56,19 @@ public class GoodItem {
 		return strBarcode;
 	}
 
-	public void setIntSelling(int intSelling){
+	public void setIntSelling(String intSelling){
 		this.intSelling = intSelling;
 	}
 
-	public int getIntSelling(){
+	public String getIntSelling(){
 		return intSelling;
 	}
 
-	public void setIntStock(int intStock){
+	public void setIntStock(String intStock){
 		this.intStock = intStock;
 	}
 
-	public int getIntStock(){
+	public String getIntStock(){
 		return intStock;
 	}
 
@@ -87,11 +88,11 @@ public class GoodItem {
 		return strName;
 	}
 
-	public void setStrImg(String strImg){
+	public void setStrImg(ArrayList<StrImgItem> strImg){
 		this.strImg = strImg;
 	}
 
-	public String getStrImg(){
+	public ArrayList<StrImgItem> getStrImg(){
 		return strImg;
 	}
 

@@ -53,8 +53,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
         myViewHolder.nameGoods.setText(getListGoods().get(i).getStrName());
         myViewHolder.priceList.setText(Konversi.convert(String.valueOf(getListGoods().get(i).getIntPurchase())));
         myViewHolder.stock.setText(String.valueOf(getListGoods().get(i).getIntStock()));
+        if(!getListGoods().get(i).getStrImg().isEmpty())
         Glide.with(context)
-                .load(getListGoods().get(i).getStrImg())
+                .load("http://subarkah.kuy.web.id/"+getListGoods().get(i).getStrImg().get(0).getUrl())
                 .into(myViewHolder.tvImage);
     }
 

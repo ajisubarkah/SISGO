@@ -45,6 +45,13 @@ public class DashboardFragment extends Fragment implements DashboardView, OnItem
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        DashboardPresenter presenter = new DashboardPresenter(this, apiInterface);
+        presenter.getLoad();
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 

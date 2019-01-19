@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName;
 public class GoodDetailResponse {
 
 	@SerializedName("data")
-	private GoodData data;
+	private GoodItem data;
 
-	public void setGoodData(GoodData goodData){
+	public void setGoodData(GoodItem goodData){
 		this.data = data;
 	}
 
-	public GoodData getGoodData(){
+	public GoodItem getGoodData(){
 		return data;
 	}
 }

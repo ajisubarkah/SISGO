@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.sisgo.fragment.DashboardFragment;
 import android.sisgo.fragment.InventoryFragment;
+import android.sisgo.utils.WhoIs;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.app.Fragment;
@@ -15,6 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -44,6 +52,16 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         setNavigationItemSelected(R.id.dashboard_item);
+        View header = navigationView.getHeaderView(0);
+
+        CircleImageView imageNav = header.findViewById(R.id.image_nav);
+        TextView titleNav = header.findViewById(R.id.title_nav);
+
+        Glide.with(this)
+                .load("http://subarkah.kuy.web.id/storage/profiles/"+WhoIs.idUser+".jpg")
+                .into(imageNav);
+
+        titleNav.setText(getIntent().getStringExtra("fullname"));
     }
 
     @Override

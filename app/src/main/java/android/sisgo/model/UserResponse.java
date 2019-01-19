@@ -7,6 +7,9 @@ public class UserResponse{
 	@SerializedName("id")
 	private String id;
 
+	@SerializedName("fullname")
+	private String fullname;
+
 	@SerializedName("message")
 	private String message;
 
@@ -22,6 +25,14 @@ public class UserResponse{
 
 	public String getId(){
 		return id;
+	}
+
+	public void setFullname(String fullname){
+		this.fullname = fullname;
+	}
+
+	public String getFullname(){
+		return fullname;
 	}
 
 	public void setMessage(String message){

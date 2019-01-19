@@ -1,6 +1,7 @@
 package android.sisgo;
 
 import android.sisgo.model.GoodDetailResponse;
+import android.sisgo.model.StrImgItem;
 import android.sisgo.presenter.DetailGoodPresenter;
 import android.sisgo.service.APIInterface;
 import android.sisgo.service.APIService;
@@ -18,6 +19,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
+
+import java.util.ArrayList;
 
 public class DetailGoodActivity extends AppCompatActivity implements DetailGoodView {
 
@@ -83,30 +88,36 @@ public class DetailGoodActivity extends AppCompatActivity implements DetailGoodV
     }
 
     @Override
-    public void showEvent(GoodDetailResponse data) {
-        GoodDetailResponse goodItems = data;
+    public void showEvent(final GoodDetailResponse data) {
+        final ArrayList<StrImgItem> mg = data.getGoodData().getStrImg();
 
-        ImageView img = findViewById(R.id.tv_image);
-        Glide.with(this)
-                .load(goodItems.getGoodData().getStrImg())
-                .into(img);
+        CarouselView img = findViewById(R.id.tv_image);
+        img.setImageListener(new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                Glide.with(imageView)
+                        .load("http://subarkah.kuy.web.id/"+data.getGoodData().getStrImg().get(position).getUrl())
+                        .into(imageView);
+            }
+        });
+        img.setPageCount(mg.size());
 
         TextView barcode = findViewById(R.id.barcode);
-        barcode.setText(goodItems.getGoodData().getStrBarcode());
+        barcode.setText(data.getGoodData().getStrBarcode());
 
         TextView name = findViewById(R.id.name_goods);
-        name.setText(goodItems.getGoodData().getStrName());
+        name.setText(data.getGoodData().getStrName());
 
         TextView stock = findViewById(R.id.stock);
-        stock.setText(goodItems.getGoodData().getIntStock());
+        stock.setText(data.getGoodData().getIntStock());
 
         TextView sell = findViewById(R.id.sell);
-        sell.setText(Konversi.convert(goodItems.getGoodData().getIntSelling()));
+        sell.setText(Konversi.convert(data.getGoodData().getIntSelling()));
 
         TextView buy = findViewById(R.id.buy);
-        buy.setText(Konversi.convert(goodItems.getGoodData().getIntPurchase()));
+        buy.setText(Konversi.convert(data.getGoodData().getIntPurchase()));
 
         TextView updateAt = findViewById(R.id.update);
-        updateAt.setText(goodItems.getGoodData().getStrCpdatedAt());
+        updateAt.setText(data.getGoodData().getStrCpdatedAt());
     }
 }
