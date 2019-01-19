@@ -1,12 +1,11 @@
 <div align="center">
+
 # SISGO
 
-## Overview 
-
 [![img](img/prev1.png)](https://kuy.web.id)
+[![img](img/prev4.png)](https://kuy.web.id)
 [![img](img/prev2.png)](https://kuy.web.id)
 [![img](img/prev3.png)](https://kuy.web.id)
-[![img](img/prev4.png)](https://kuy.web.id)
 </div>
 
 ## Features
